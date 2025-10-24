@@ -13,17 +13,15 @@ spec:
           - resources:
               kinds:
                 - Deployment
+              selector:
+                matchLabels:
+                  storage.example/attach-emptydir: "true"
       exclude:
         any:
           - resources:
               selector:
                 matchLabels:
                   storage.example/skip-emptydir: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.metadata.labels.\"storage.example/attach-emptydir\" || 'false' }}"
-            operator: Equals
-            value: "true"
       mutate:
         patchStrategicMerge:
           spec:
