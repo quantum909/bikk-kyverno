@@ -1,0 +1,32 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: mutate-emptydir
+policies:
+  - ../../policies/mutate-emptydir.yaml
+resources:
+  - dep-target.yaml
+  - dep-target-mutated.yaml
+  - dep-skip.yaml
+  - dep-nonmatch.yaml
+results:
+  - policy: bikkfabian/add-emptydir-workdir
+    rule: add-workdir-emptydir
+    resources:
+      - bikkfabian/dep-target
+    kind: Deployment
+    patchedResource: dep-target-mutated.yaml
+
+  - policy: bikkfabian/add-emptydir-workdir
+    rule: add-workdir-emptydir
+    resources:
+      - bikkfabian/dep-skip
+    kind: Deployment
+    result: skip
+
+  - policy: bikkfabian/add-emptydir-workdir
+    rule: add-workdir-emptydir
+    resources:
+      - bikkfabian/dep-nonmatch
+    kind: Deployment
+    result: skip

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-skip
+  namespace: bikkfabian
+  labels:
+    storage.example/attach-emptydir: "true"
+    storage.example/skip-emptydir: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dep-skip
+  template:
+    metadata:
+      labels:
+        app: dep-skip
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25-alpine

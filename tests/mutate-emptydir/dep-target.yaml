@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-target
+  namespace: bikkfabian
+  labels:
+    storage.example/attach-emptydir: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dep-target
+  template:
+    metadata:
+      labels:
+        app: dep-target
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25-alpine

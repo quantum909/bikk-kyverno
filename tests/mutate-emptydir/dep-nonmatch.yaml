@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-nonmatch
+  namespace: bikkfabian
+  labels:
+    app: dep-nonmatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dep-nonmatch
+  template:
+    metadata:
+      labels:
+        app: dep-nonmatch
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25-alpine
