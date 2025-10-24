@@ -6,7 +6,6 @@ policies:
   - ../../policies/mutate-emptydir.yaml
 resources:
   - dep-target.yaml
-  - dep-target-mutated.yaml
   - dep-skip.yaml
   - dep-nonmatch.yaml
 results:
