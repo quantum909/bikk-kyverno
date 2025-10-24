@@ -8,23 +8,23 @@ resources:
   - pod-success.yaml
   - pod-fail.yaml
 results:
-  - policy: test/require-requests-limits
+  - policy: bikkfabian/require-requests-limits
     rule: validate-resources
     resources: 
-      - test/pod-success
+      - bikkfabian/pod-success
     kind: Pod
     result: pass
   
-  - policy: test/require-requests-limits
+  - policy: bikkfabian/require-requests-limits
     rule: validate-resources
     resources:
-      - test/pod-fail-no-requests
+      - bikkfabian/pod-fail-no-requests
     kind: Pod
     result: fail
   
-  - policy: test/require-requests-limits
+  - policy: bikkfabian/require-requests-limits
     rule: validate-resources
     resources:
-      - test/pod-fail-no-limits
+      - bikkfabian/pod-fail-no-limits
     kind: Pod
     result: fail

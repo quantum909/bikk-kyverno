@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-fail-no-requests
-  namespace: test
+  namespace: bikkfabian
 spec:
   containers:
   - name: container-fail-no-requests
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-fail-no-limits
-  namespace: test
+  namespace: bikkfabian
 spec:
   containers:
   - name: container-fail-no-limits
