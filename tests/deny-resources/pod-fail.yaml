@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-fail-no-requests
+  namespace: bikkfabian
+spec:
+  containers:
+  - name: c1
+    image: busybox:1.36
+    command: ["sh","-c","sleep 1"]
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-fail-no-limits
+  namespace: bikkfabian
+spec:
+  containers:
+  - name: c2
+    image: busybox:1.36
+    command: ["sh","-c","sleep 1"]
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "32Mi"

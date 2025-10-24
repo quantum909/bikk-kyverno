@@ -1,0 +1,76 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: deny-missing-requests-limits
+  namespace: bikkfabian
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: deny-missing-resources
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: "Denied: all containers must set CPU and memory requests and limits."
+        preconditions:
+          all:
+            - key: "{{ request.operation }}"
+              operator: In
+              value:
+                - CREATE
+                - UPDATE
+            - key: "{{ request.object.metadata.labels.\"policy.example/allow-missing-resources\" || 'false' }}"
+              operator: Equals
+              value: "false"
+        foreach:
+          - list: "request.object.spec.containers[]"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.resources.requests.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.requests.memory }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.memory }}"
+                    operator: Equals
+                    value: null
+          - list: "request.object.spec.initContainers[]"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.resources.requests.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.requests.memory }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.memory }}"
+                    operator: Equals
+                    value: null
+          - list: "request.object.spec.ephemeralContainers[]"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.resources.requests.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.requests.memory }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.cpu }}"
+                    operator: Equals
+                    value: null
+                  - key: "{{ element.resources.limits.memory }}"
+                    operator: Equals
+                    value: null

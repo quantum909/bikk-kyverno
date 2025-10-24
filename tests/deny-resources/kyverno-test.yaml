@@ -1,0 +1,38 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: deny-missing-requests-limits
+policies:
+  - ../../policies/deny-requests-limits.yaml
+resources:
+  - pod-success.yaml
+  - pod-fail.yaml
+  - pod-skip.yaml
+results:
+  - policy: bikkfabian/deny-missing-requests-limits
+    rule: deny-missing-resources
+    resources:
+      - bikkfabian/pod-success
+    kind: Pod
+    result: pass
+
+  - policy: bikkfabian/deny-missing-requests-limits
+    rule: deny-missing-resources
+    resources:
+      - bikkfabian/pod-fail-no-requests
+    kind: Pod
+    result: fail
+
+  - policy: bikkfabian/deny-missing-requests-limits
+    rule: deny-missing-resources
+    resources:
+      - bikkfabian/pod-fail-no-limits
+    kind: Pod
+    result: fail
+
+  - policy: bikkfabian/deny-missing-requests-limits
+    rule: deny-missing-resources
+    resources:
+      - bikkfabian/pod-skip
+    kind: Pod
+    result: pass
