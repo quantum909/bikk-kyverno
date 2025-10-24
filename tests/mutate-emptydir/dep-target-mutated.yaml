@@ -5,6 +5,7 @@ metadata:
   namespace: bikkfabian
   labels:
     storage.example/attach-emptydir: "true"
+    app.kubernetes.io/managed-by: kyverno
 spec:
   replicas: 1
   selector:
