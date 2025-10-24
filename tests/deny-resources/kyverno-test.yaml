@@ -35,4 +35,4 @@ results:
     resources:
       - bikkfabian/pod-skip
     kind: Pod
-    result: pass
+    result: skip
