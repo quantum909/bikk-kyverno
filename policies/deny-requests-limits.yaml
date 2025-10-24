@@ -13,18 +13,18 @@ spec:
           - resources:
               kinds:
                 - Pod
+      preconditions:
+        all:
+          - key: "{{ request.operation }}"
+            operator: In
+            value:
+              - CREATE
+              - UPDATE
+          - key: "{{ request.object.metadata.labels.\"policy.example/allow-missing-resources\" || 'false' }}"
+            operator: Equals
+            value: "false"
       validate:
         message: "Denied: all containers must set CPU and memory requests and limits."
-        preconditions:
-          all:
-            - key: "{{ request.operation }}"
-              operator: In
-              value:
-                - CREATE
-                - UPDATE
-            - key: "{{ request.object.metadata.labels.\"policy.example/allow-missing-resources\" || 'false' }}"
-              operator: Equals
-              value: "false"
         foreach:
           - list: "request.object.spec.containers[]"
             deny:
